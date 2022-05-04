@@ -92,17 +92,4 @@ WHERE dea.continent IS NOT NULL)
 
 SELECT *,(TotalVaccinations/population) * 100 FROM POPVSVAC
 
---Creating View to store data for later visualisations--
-
-
-Create View PercentPopulationVaccinated AS
-
-SELECT dea.continent,dea.location, dea.date, dea.population,
-		vac.new_vaccinations,
-		SUM(CAST(new_vaccinations as INT)) OVER (PARTITION BY dea.location ORDER BY dea.location,dea.date) TotalVaccinations
-FROM Deaths dea
-JOIN Vaccinations vac
-	ON dea.location = vac.location
-	AND dea.date = vac.date
-WHERE dea.continent IS NOT NULL
 
